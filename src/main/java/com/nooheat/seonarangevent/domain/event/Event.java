@@ -39,9 +39,10 @@ public class Event extends BaseTimeEntity {
     @Column(columnDefinition = "DATETIME")
     private LocalDateTime closeDate;
 
+    @Column(columnDefinition = "BOOLEAN NOT NULL DEFAULT FALSE")
     private Boolean allowDuplication;
 
-    @Column(columnDefinition = "int default 0")
+    @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
     private Integer current;
 
     @Builder
@@ -53,5 +54,6 @@ public class Event extends BaseTimeEntity {
         this.maximum = maximum;
         this.closeDate = closeDate;
         this.allowDuplication = allowDuplication;
+        this.current = 0;
     }
 }

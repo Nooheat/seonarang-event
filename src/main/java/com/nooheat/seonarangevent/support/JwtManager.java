@@ -1,16 +1,16 @@
 package com.nooheat.seonarangevent.support;
 
+import com.google.gson.JsonObject;
+import com.nooheat.seonarangevent.domain.user.User;
 import com.nooheat.seonarangevent.exception.UidNotFoundException;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 
-public class JwtVerifier {
+public class JwtManager {
 
     static String secret = System.getenv("SEONARANG_EVENT_SECRET");
 
     static {
-        if(secret == null) secret = "this is default secret";
+        if (secret == null) secret = "this is default secret";
     }
 
     public static boolean isAuthenticToken(String tokenStr) throws Exception {
@@ -28,8 +28,13 @@ public class JwtVerifier {
         return true;
     }
 
-    public static String generateJwtToken(String uid) {
-        return uid;
+
+    //TODO:: Generate Jwt Token By User Object
+    public static String generateJwtToken(User user) {
+
+        return Jwts.builder()
+                .claim("uid", user.getUid())
+                .signWith(SignatureAlgorithm.HS256, secret).compact();
     }
 
 }

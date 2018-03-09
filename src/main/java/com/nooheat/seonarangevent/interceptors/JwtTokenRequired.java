@@ -1,7 +1,7 @@
 package com.nooheat.seonarangevent.interceptors;
 
 import com.nooheat.seonarangevent.exception.UidNotFoundException;
-import com.nooheat.seonarangevent.support.JwtVerifier;
+import com.nooheat.seonarangevent.support.JwtManager;
 import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -34,7 +34,7 @@ public class JwtTokenRequired extends HandlerInterceptorAdapter {
         }
 
         try {
-            JwtVerifier.isAuthenticToken(tokenStr);
+            JwtManager.isAuthenticToken(tokenStr);
         } catch (UidNotFoundException te) {
             response.setStatus(401);
             writer.write("Your token doesn't contain 'uid' value");

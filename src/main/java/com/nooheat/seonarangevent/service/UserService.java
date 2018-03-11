@@ -15,7 +15,9 @@ public class UserService {
 
     @Transactional
     public User createOrFindUser(JsonObject userInfo) {
-        return userRepository.save(User.builder()
+        User user = userRepository.findByEmail(userInfo.get("email").getAsString());
+        if (user != null) return user;
+        else return userRepository.save(User.builder()
                 .displayName(userInfo.get("display_name").getAsString())
                 .twitchId(userInfo.get("login").getAsString())
                 .email(userInfo.get("email").getAsString())

@@ -16,6 +16,7 @@ public class HttpInterceptorConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtTokenRequired)
 //                .excludePathPatterns("/login");
-                .excludePathPatterns("/**");
+                .addPathPatterns("/**")
+                .excludePathPatterns("/callback");
     }
 }

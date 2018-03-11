@@ -18,7 +18,7 @@ public class EventController {
     private EventService eventService;
 
     @PostMapping("/event")
-    public Long saveEvent(@RequestHeader(value = "seonarang-event-access-token", defaultValue = "null") String accessToken, @RequestBody EventSaveRequestDto dto) {
+    public Long saveEvent(@RequestHeader(value = "twitch-event-access-token", defaultValue = "null") String accessToken, @RequestBody EventSaveRequestDto dto) {
         System.out.println(accessToken);
         dto.setUid("yunth1228");
         return eventService.save(dto);

@@ -4,7 +4,11 @@ import com.google.gson.JsonObject;
 import com.nooheat.seonarangevent.exception.PermissionNotFoundException;
 import com.nooheat.seonarangevent.exception.UidNotFoundException;
 import com.nooheat.seonarangevent.support.JwtManager;
-import io.jsonwebtoken.*;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.Intercepter;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.util.WebUtils;
@@ -15,10 +19,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @Component
-public class JwtTokenRequired extends HandlerInterceptorAdapter {
-
+public class OnlyStreamer extends HandlerInterceptorAdapter {
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        System.out.println("PREHANDLE [ONLYSTREAMER]");
+
         System.out.println("PREHANDLE [JWTTOKENREQUIRED]");
         String tokenStr = WebUtils.getCookie(request, "twitch-event-access-token").getValue();
 
@@ -28,7 +33,11 @@ public class JwtTokenRequired extends HandlerInterceptorAdapter {
         }
 
         try {
-            JwtManager.parse(tokenStr);
+            Jws<Claims> claims = JwtManager.parse(tokenStr);
+            if (!claims.getBody().get("permission", Boolean.class)) {
+                handleUnauthorizedWithMessage(response, "You are not permitted.");
+                return false;
+            }
         } catch (UidNotFoundException te) {
             handleUnauthorizedWithMessage(response, "Your token doesn't contain 'uid' value");
             return false;

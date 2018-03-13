@@ -4,6 +4,8 @@ import com.nooheat.seonarangevent.interceptors.JwtTokenRequired;
 import com.nooheat.seonarangevent.interceptors.OnlyStreamer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.context.request.WebRequestInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -21,10 +23,10 @@ public class HttpInterceptorConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(jwtTokenRequired)
 //                .excludePathPatterns("/login");
                 .addPathPatterns("/**")
-                .excludePathPatterns("/callback");
+                .excludePathPatterns("/login/twitch");
 
         registry.addInterceptor(onlyStreamer)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/callback");
+                .excludePathPatterns("/login/twitch");
     }
 }

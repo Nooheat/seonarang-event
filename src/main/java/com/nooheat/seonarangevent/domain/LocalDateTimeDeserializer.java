@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 public class LocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
 
     @Override
-    public LocalDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    public LocalDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         String value = p.getValueAsString();
         return LocalDateTime.parse(value, DateTimeFormatter.ISO_DATE_TIME).plusHours(9);
     }

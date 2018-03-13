@@ -38,7 +38,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/callback")
+    @GetMapping("/login/twitch")
     public void twitchOauthCallback(TwitchOauthCallbackDto params, HttpServletResponse response) throws IOException {
 
         String accessToken = getAccessToken(params.getCode());
@@ -56,7 +56,7 @@ public class UserController {
 
     private String getAccessToken(String code) {
         final String INFO_URL = "https://id.twitch.tv/oauth2/token?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "&code="
-                + code + "&grant_type=authorization_code&redirect_uri=http://localhost:8080/callback&scope=user:read:email";
+                + code + "&grant_type=authorization_code&redirect_uri=http://localhost:8080/login/twitch&scope=user:read:email";
 
         RestTemplate getUserAccessToken = new RestTemplate();
 

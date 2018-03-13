@@ -2,8 +2,7 @@ package com.nooheat.seonarangevent.support;
 
 import com.google.gson.JsonObject;
 import com.nooheat.seonarangevent.domain.user.User;
-import com.nooheat.seonarangevent.exception.PermissionNotFoundException;
-import com.nooheat.seonarangevent.exception.UidNotFoundException;
+import com.nooheat.seonarangevent.exception.JwtTokenClaimNotFoundException;
 import io.jsonwebtoken.*;
 
 public class JwtManager {
@@ -14,7 +13,7 @@ public class JwtManager {
         if (secret == null) secret = "this is default secret";
     }
 
-    public static Jws<Claims> parse(String tokenStr) throws Exception {
+    public static Jws<Claims> parse(String tokenStr) throws JwtTokenClaimNotFoundException {
 
         Jws<Claims> token = Jwts.parser()
                 .setSigningKey(secret)
@@ -24,9 +23,9 @@ public class JwtManager {
         Boolean permission = token.getBody().get("permission", Boolean.class);
 
         if (uid == null) {
-            throw new UidNotFoundException();
+            throw new JwtTokenClaimNotFoundException("uid");
         } else if (permission == null) {
-            throw new PermissionNotFoundException();
+            throw new JwtTokenClaimNotFoundException("permission");
         }
 
         return token;

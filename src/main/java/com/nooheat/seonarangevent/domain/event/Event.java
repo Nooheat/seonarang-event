@@ -1,5 +1,6 @@
 package com.nooheat.seonarangevent.domain.event;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nooheat.seonarangevent.domain.BaseTimeEntity;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.AccessLevel;
@@ -37,6 +38,7 @@ public class Event extends BaseTimeEntity {
     private Integer maximum;
 
     @Column(columnDefinition = "DATETIME")
+    @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
     private LocalDateTime closeDate;
 
     @Column(columnDefinition = "BOOLEAN NOT NULL DEFAULT FALSE")

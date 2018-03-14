@@ -4,6 +4,7 @@ import com.nooheat.seonarangevent.domain.event.Event;
 import com.nooheat.seonarangevent.domain.event.EventRepository;
 import com.nooheat.seonarangevent.dto.event.EventSaveRequestDto;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -23,22 +24,16 @@ public class EventService {
     }
 
     @Transactional
-    public List<Event> findAllDesc() {
-        return eventRepository.findAllDesc();
+    public List<Event> findOpenEvents(Pageable pageable) {
+        return eventRepository.findOpenEvents(pageable).getContent();
     }
 
     @Transactional
-    public List<Event> findAllAsc() {
-        return eventRepository.findAllAsc();
+    public Collection<Event> findClosedEvents(Pageable pageable) {
+        return eventRepository.findClosedEvents(pageable).getContent();
     }
 
-    @Transactional
-    public List<Event> findOpenEventsDesc() {
-        return eventRepository.findOpenEventsDesc();
-    }
-
-    @Transactional
-    public List<Event> findOpenEventsAsc() {
-        return eventRepository.findOpenEventsAsc();
+    public Collection<Event> findAll(Pageable pageable) {
+        return eventRepository.findAll(pageable).getContent();
     }
 }

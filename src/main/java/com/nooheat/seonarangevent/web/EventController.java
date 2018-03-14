@@ -15,6 +15,7 @@ import io.jsonwebtoken.Jwts;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -27,7 +28,7 @@ public class EventController {
     private EventService eventService;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @PostMapping("/event")
     public Long saveEvent(@CookieValue(value = "twitch-event-access-token", defaultValue = "null") String accessToken, @RequestBody EventSaveRequestDto dto) throws Exception {
@@ -46,27 +47,19 @@ public class EventController {
     }
 
     @GetMapping("/event/all")
-    public Collection<Event> getEvents(@RequestParam(name = "sort", defaultValue = "desc") String sort) throws UnexpectedSortException {
-        switch (sort.toLowerCase()) {
-            case "desc":
-                return eventService.findAllDesc();
-            case "asc":
-                return eventService.findAllAsc();
-            default:
-                throw new UnexpectedSortException(sort);
-        }
+    public Collection<Event> getEvents(Pageable pageable) {
+        return eventService.findAll(pageable);
     }
 
     @GetMapping("/event/open")
-    public Collection<Event> getOpenEvents(@RequestParam(name = "sort", defaultValue = "desc") String sort) throws UnexpectedSortException {
-        switch (sort.toLowerCase()) {
-            case "desc":
-                return eventService.findOpenEventsDesc();
-            case "asc":
-                return eventService.findOpenEventsAsc();
-            default:
-                throw new UnexpectedSortException(sort);
-        }
+    public Collection<Event> getOpenEvents(Pageable pageable) {
+        return eventService.findOpenEvents(pageable);
     }
+
+    @GetMapping("/event/closed")
+    public Collection<Event> getLockEvents(Pageable pageable) {
+        return eventService.findClosedEvents(pageable);
+    }
+
 
 }

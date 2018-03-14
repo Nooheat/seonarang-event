@@ -47,6 +47,9 @@ public class Event extends BaseTimeEntity {
     @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
     private Integer current;
 
+    @Column(columnDefinition = "BOOLEAN NOT NULL DEFAULT FALSE")
+    private Boolean closed;
+
     @Builder
     public Event(String uid, EventType type, String title, String content, Integer maximum, LocalDateTime closeDate, Boolean allowDuplication) {
         this.uid = uid;
@@ -57,5 +60,6 @@ public class Event extends BaseTimeEntity {
         this.closeDate = closeDate;
         this.allowDuplication = allowDuplication;
         this.current = 0;
+        this.closed = false;
     }
 }

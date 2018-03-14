@@ -27,10 +27,12 @@ public class GlobalControllerAdvice {
         return new ErrorResponse(LocalDateTime.now(), exception.getMessage(), request.getRequestURL().toString());
     }
 
-    @ExceptionHandler(UnexpectedSortException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
-    protected ErrorResponse unexpectedSortExceptionHandle(HttpServletRequest request, Exception exception) {
-        return new ErrorResponse(LocalDateTime.now(), exception.getMessage(), request.getRequestURL().toString());
-    }
+
+//    UnexpectedSortException은 발생할 일이 없어 주석처리.
+//    @ExceptionHandler(UnexpectedSortException.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ResponseBody
+//    protected ErrorResponse unexpectedSortExceptionHandle(HttpServletRequest request, Exception exception) {
+//        return new ErrorResponse(LocalDateTime.now(), exception.getMessage(), request.getRequestURL().toString());
+//    }
 }

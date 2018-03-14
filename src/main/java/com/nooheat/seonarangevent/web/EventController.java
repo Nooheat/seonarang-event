@@ -5,7 +5,6 @@ import com.nooheat.seonarangevent.domain.event.Event;
 import com.nooheat.seonarangevent.domain.user.User;
 import com.nooheat.seonarangevent.domain.user.UserRepository;
 import com.nooheat.seonarangevent.dto.event.EventSaveRequestDto;
-import com.nooheat.seonarangevent.exception.UnexpectedSortException;
 import com.nooheat.seonarangevent.service.EventService;
 import com.nooheat.seonarangevent.support.JwtManager;
 import io.jsonwebtoken.Claims;
@@ -40,23 +39,23 @@ public class EventController {
         return eventService.save(dto);
     }
 
-    @GetMapping("/me/event")
+    @GetMapping("/me/events")
     public Collection<Event> getMyEvents(@CookieValue(value = "twitch-event-access-token", defaultValue = "null") String accessToken) throws Exception {
         String uid = JwtManager.parse(accessToken).getBody().get("uid", String.class);
         return userRepository.findByUid(uid).getEvents();
     }
 
-    @GetMapping("/event/all")
+    @GetMapping("/events/all")
     public Collection<Event> getEvents(Pageable pageable) {
         return eventService.findAll(pageable);
     }
 
-    @GetMapping("/event/open")
+    @GetMapping("/events/open")
     public Collection<Event> getOpenEvents(Pageable pageable) {
         return eventService.findOpenEvents(pageable);
     }
 
-    @GetMapping("/event/closed")
+    @GetMapping("/events/closed")
     public Collection<Event> getLockEvents(Pageable pageable) {
         return eventService.findClosedEvents(pageable);
     }

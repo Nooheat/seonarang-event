@@ -31,51 +31,15 @@ import java.io.IOException;
 @NoArgsConstructor
 public class UserController {
 
-    private static final String CLIENT_ID = System.getenv("SEONARANG_EVENT_CLIENT_ID");
-    private static final String CLIENT_SECRET = System.getenv("SEONARANG_EVENT_CLIENT_SECRET");
-
-
     @Autowired
     private UserService userService;
 
     @GetMapping("/login/twitch")
-    public void twitchOauthCallback(TwitchOauthCallbackDto params, HttpServletResponse response) throws IOException {
+    public void twitchOauthCallback(TwitchOauthCallbackDto oauthDto, HttpServletResponse response) throws IOException {
+        User user = userService.createOrFindUser(oauthDto);
 
-        String accessToken = getAccessToken(params.getCode());
-
-        JsonObject userInfo = getUserInformation(accessToken);
-
-
-        User user = userService.createOrFindUser(userInfo);
-
-        // TODO: create or find user via UserService.
-        // TODO: AND GENERATE JWT TOKEN BY USER OBJECT.
         response.addCookie(new Cookie("twitch-event-access-token", JwtManager.generateJwtToken(user)));
         response.sendRedirect("/");
-    }
-
-    private String getAccessToken(String code) {
-        final String INFO_URL = "https://id.twitch.tv/oauth2/token?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "&code="
-                + code + "&grant_type=authorization_code&redirect_uri=http://localhost:8080/login/twitch&scope=user:read:email";
-
-        RestTemplate getUserAccessToken = new RestTemplate();
-
-        String res = getUserAccessToken.postForObject(INFO_URL, null, String.class);
-        JsonObject tokenObj = new JsonParser().parse(res).getAsJsonObject();
-
-        return tokenObj.get("access_token").getAsString();
-    }
-
-    private JsonObject getUserInformation(String accessToken) {
-        RestTemplate getUserInformation = new RestTemplate();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + accessToken);
-        HttpEntity entity = new HttpEntity(headers);
-        String infoStr = getUserInformation.exchange("https://api.twitch.tv/helix/users", HttpMethod.GET, entity, String.class).getBody();
-        System.out.println(infoStr);
-//      형식 : {"data":[{"id":"189522245","login":"nooheat1228","display_name":"nooheat1228","type":"","broadcaster_type":"","description":"","profile_image_url":"https://static-cdn.jtvnw.net/user-default-pictures/0ecbb6c3-fecb-4016-8115-aa467b7c36ed-profile_image-300x300.jpg","offline_image_url":"","view_count":1,"email":"nooheat1228@gmail.com"}]}
-        return new JsonParser().parse(infoStr).getAsJsonObject().get("data").getAsJsonArray().get(0).getAsJsonObject();
     }
 
 }

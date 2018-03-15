@@ -37,7 +37,6 @@ public class JwtManager {
 
         return Jwts.builder()
                 .claim("uid", user.getUid())
-                .claim("permission", user.getPermission())
                 .signWith(SignatureAlgorithm.HS256, secret).compact();
     }
 

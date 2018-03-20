@@ -68,9 +68,13 @@ public class UserService {
 
 //      형식 : {"data":[{"id":"189522245","login":"nooheat1228","display_name":"nooheat1228","type":"","broadcaster_type":"","description":"","profile_image_url":"https://static-cdn.jtvnw.net/user-default-pictures/0ecbb6c3-fecb-4016-8115-aa467b7c36ed-profile_image-300x300.jpg","offline_image_url":"","view_count":1,"email":"nooheat1228@gmail.com"}]}
 
+        System.out.println(infoStr);
         return new UserInfo(infoStr);
     }
 
+    public User findByUid(String uid) {
+        return userRepository.findByUid(uid);
+    }
 
 
     // POJO

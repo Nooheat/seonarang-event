@@ -34,7 +34,7 @@ public class JwtManager {
 
     //TODO:: Generate Jwt Token By User Object
     public static String generateJwtToken(User user) {
-
+        System.out.println(user.getDisplayName());
         return Jwts.builder()
                 .claim("uid", user.getUid())
                 .signWith(SignatureAlgorithm.HS256, secret).compact();

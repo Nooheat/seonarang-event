@@ -25,8 +25,5 @@ public class HttpInterceptorConfig extends WebMvcConfigurerAdapter {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/login/twitch");
 
-        registry.addInterceptor(onlyStreamer)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/login/twitch");
     }
 }

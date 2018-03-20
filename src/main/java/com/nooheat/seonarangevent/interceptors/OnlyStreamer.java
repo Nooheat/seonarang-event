@@ -7,6 +7,7 @@ import com.nooheat.seonarangevent.domain.user.UserRepository;
 import com.nooheat.seonarangevent.exception.JwtTokenStringNotFoundException;
 import com.nooheat.seonarangevent.exception.UidNotValidException;
 import com.nooheat.seonarangevent.exception.UserNotPermittedException;
+import com.nooheat.seonarangevent.service.UserService;
 import com.nooheat.seonarangevent.support.JwtManager;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.Intercepter;
 import io.jsonwebtoken.Claims;
@@ -28,7 +29,7 @@ import java.time.LocalDateTime;
 public class OnlyStreamer extends HandlerInterceptorAdapter {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -42,7 +43,7 @@ public class OnlyStreamer extends HandlerInterceptorAdapter {
 
 
         String uid = JwtManager.parse(tokenStr).getBody().get("uid", String.class);
-        User user = userRepository.findByUid(uid);
+        User user = userService.findByUid(uid);
 
         if (user == null) {
             throw new UidNotValidException();

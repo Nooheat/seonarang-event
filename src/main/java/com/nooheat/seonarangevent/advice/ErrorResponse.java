@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.tomcat.jni.Local;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +19,11 @@ public class ErrorResponse {
     private String message;
     private String path;
 
+    public ErrorResponse(String message, String path) {
+        this.timestamp = LocalDateTime.now();
+        this.message = message;
+        this.path = path;
+    }
 }
 
 //TODO: failed to invoke ~

@@ -18,21 +18,21 @@ public class GlobalControllerAdvice {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
     protected ErrorResponse claimNotFoundExceptionHandle(HttpServletRequest request, Exception exception) {
-        return new ErrorResponse(LocalDateTime.now(), exception.getMessage(), request.getRequestURL().toString());
+        return new ErrorResponse(exception.getMessage(), request.getRequestURL().toString());
     }
 
     @ExceptionHandler(value = {JwtTokenStringNotFoundException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     protected ErrorResponse tokenStringNotFoundExceptionHandle(HttpServletRequest request, Exception exception) {
-        return new ErrorResponse(LocalDateTime.now(), exception.getMessage(), request.getRequestURL().toString());
+        return new ErrorResponse(exception.getMessage(), request.getRequestURL().toString());
     }
 
     @ExceptionHandler(UidNotValidException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
     protected ErrorResponse uidNotFoundException(HttpServletRequest request, Exception exception) {
-        return new ErrorResponse(LocalDateTime.now(), exception.getMessage(), request.getRequestURL().toString());
+        return new ErrorResponse(exception.getMessage(), request.getRequestURL().toString());
     }
 
 //    UnexpectedSortException은 발생할 일이 없어 주석처리.

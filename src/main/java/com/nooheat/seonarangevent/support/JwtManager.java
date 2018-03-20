@@ -20,12 +20,9 @@ public class JwtManager {
                 .parseClaimsJws(tokenStr);
 
         String uid = token.getBody().get("uid", String.class);
-        Boolean permission = token.getBody().get("permission", Boolean.class);
 
         if (uid == null) {
             throw new JwtTokenClaimNotFoundException("uid");
-        } else if (permission == null) {
-            throw new JwtTokenClaimNotFoundException("permission");
         }
 
         return token;

@@ -44,6 +44,7 @@ public class UserController {
         User user = userService.createOrFindUser(oauthDto);
         Cookie cookie = new Cookie("twitch-event-access-token", JwtManager.generateJwtToken(user));
         cookie.setPath("/"); // 설정 안할시 /login으로 지정됨
+        cookie.setMaxAge(60 * 60 * 24 * 365);
         response.addCookie(cookie);
         response.sendRedirect("/");
     }

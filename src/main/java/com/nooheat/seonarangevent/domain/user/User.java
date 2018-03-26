@@ -3,6 +3,7 @@ package com.nooheat.seonarangevent.domain.user;
 
 import com.nooheat.seonarangevent.domain.BaseTimeEntity;
 import com.nooheat.seonarangevent.domain.event.Event;
+import com.nooheat.seonarangevent.domain.partIn.UserEventPartIn;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -35,9 +36,11 @@ public class User extends BaseTimeEntity {
     @Column(columnDefinition = "BOOLEAN NOT NULL DEFAULT 0")
     private Boolean permission;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "uid")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "uid")
     private Collection<Event> events;
+
+    @OneToMany(mappedBy = "user")
+    private Collection<UserEventPartIn> partIns;
 
     @Builder
     public User(String twitchId, String displayName, String email) {

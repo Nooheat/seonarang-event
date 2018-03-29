@@ -1,6 +1,5 @@
 package com.nooheat.seonarangevent.support;
 
-import com.google.gson.JsonObject;
 import com.nooheat.seonarangevent.domain.user.User;
 import com.nooheat.seonarangevent.exception.JwtTokenClaimNotFoundException;
 import io.jsonwebtoken.*;
@@ -19,10 +18,10 @@ public class JwtManager {
                 .setSigningKey(secret)
                 .parseClaimsJws(tokenStr);
 
-        String uid = token.getBody().get("uid", String.class);
+        String uid = token.getBody().get("userId", String.class);
 
         if (uid == null) {
-            throw new JwtTokenClaimNotFoundException("uid");
+            throw new JwtTokenClaimNotFoundException("userId");
         }
 
         return token;
@@ -33,7 +32,7 @@ public class JwtManager {
     public static String generateJwtToken(User user) {
         System.out.println(user.getDisplayName());
         return Jwts.builder()
-                .claim("uid", user.getUid())
+                .claim("userId", user.getUserId())
                 .signWith(SignatureAlgorithm.HS256, secret).compact();
     }
 

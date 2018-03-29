@@ -51,7 +51,7 @@ public class UserController {
 
     @GetMapping("/me/events")
     public Collection<Event> getMyEvents(@CookieValue(value = "twitch-event-access-token", defaultValue = "null") String accessToken) throws Exception {
-        String uid = JwtManager.parse(accessToken).getBody().get("uid", String.class);
+        String uid = JwtManager.parse(accessToken).getBody().get("userId", String.class);
         User user = userService.findByUid(uid);
 
         if (user == null) throw new UidNotValidException();

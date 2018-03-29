@@ -33,7 +33,7 @@ public class EventRepositoryTest {
                 .displayName("Nooheat")
                 .twitchId("nooheat1228")
                 .email("nooheat1228@gmail.com")
-                .build()).getUid();
+                .build()).getUserId();
     }
 
     @After
@@ -60,6 +60,6 @@ public class EventRepositoryTest {
         Event event = eventRepository.findAll().get(0);
 
         assertTrue(event.getCreatedDate().isAfter(now));
-        assertTrue(event.getUid().equals(testAccountUid));
+        assertTrue(event.getUserId().equals(testAccountUid));
     }
 }

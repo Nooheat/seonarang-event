@@ -1,6 +1,7 @@
-package com.nooheat.seonarangevent.domain.partIn;
+package com.nooheat.seonarangevent.domain.partIn.kda;
 
 import com.nooheat.seonarangevent.domain.event.Event;
+import com.nooheat.seonarangevent.domain.partIn.EventPartInId;
 import com.nooheat.seonarangevent.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -12,8 +13,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@IdClass(UserEventPartInId.class)
-public class UserEventPartIn {
+@IdClass(EventPartInId.class)
+public class KdaEventPartIn {
 
     @Id
     @ManyToOne
@@ -26,7 +27,7 @@ public class UserEventPartIn {
     private Event event;
 
     @Builder
-    public UserEventPartIn(User user, Event event) {
+    public KdaEventPartIn(User user, Event event) {
         this.user = user;
         this.event = event;
     }

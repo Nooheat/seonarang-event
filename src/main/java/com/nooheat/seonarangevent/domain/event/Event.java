@@ -2,14 +2,11 @@ package com.nooheat.seonarangevent.domain.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nooheat.seonarangevent.domain.BaseTimeEntity;
-import com.nooheat.seonarangevent.domain.partIn.UserEventPartIn;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.nooheat.seonarangevent.domain.partIn.kda.KdaEventPartIn;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -22,10 +19,10 @@ public class Event extends BaseTimeEntity {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long eventId;
 
     @Column(nullable = false)
-    private String uid;
+    private String userId;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -53,11 +50,11 @@ public class Event extends BaseTimeEntity {
     private Boolean closed;
 
     @OneToMany(mappedBy = "event")
-    private Collection<UserEventPartIn> partIns;
+    private Collection<KdaEventPartIn> kdaEventPartIns;
 
     @Builder
-    public Event(String uid, EventType type, String title, String content, Integer maximum, LocalDateTime closeDate, Boolean allowDuplication) {
-        this.uid = uid;
+    public Event(String userId, EventType type, String title, String content, Integer maximum, LocalDateTime closeDate, Boolean allowDuplication) {
+        this.userId = userId;
         this.type = type;
         this.title = title;
         this.content = content;

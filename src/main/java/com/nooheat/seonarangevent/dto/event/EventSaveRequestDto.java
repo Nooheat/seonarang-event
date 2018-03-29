@@ -1,30 +1,22 @@
 package com.nooheat.seonarangevent.dto.event;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.nooheat.seonarangevent.domain.LocalDateTimeDeserializer;
 import com.nooheat.seonarangevent.domain.event.Event;
 import com.nooheat.seonarangevent.domain.event.EventType;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import javafx.util.converter.LocalDateTimeStringConverter;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class EventSaveRequestDto {
 
-    private String uid;
+    private String userId;
     private EventType type;
     private String title;
     private String content;
@@ -37,7 +29,7 @@ public class EventSaveRequestDto {
 
     public Event toEntity() {
         return Event.builder()
-                .uid(uid)
+                .userId(userId)
                 .type(type)
                 .title(title)
                 .content(content)
@@ -48,8 +40,8 @@ public class EventSaveRequestDto {
     }
 
     @Builder
-    public EventSaveRequestDto(String uid, EventType type, String title, String content, Integer maximum, LocalDateTime closeDate, Boolean allowDuplication) {
-        this.uid = uid;
+    public EventSaveRequestDto(String userId, EventType type, String title, String content, Integer maximum, LocalDateTime closeDate, Boolean allowDuplication) {
+        this.userId = userId;
         this.type = type;
         this.title = title;
         this.content = content;

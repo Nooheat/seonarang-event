@@ -5,7 +5,6 @@ import com.nooheat.seonarangevent.domain.event.EventType;
 import com.nooheat.seonarangevent.domain.user.User;
 import com.nooheat.seonarangevent.domain.user.UserRepository;
 import com.nooheat.seonarangevent.dto.event.EventSaveRequestDto;
-import org.apache.tomcat.jni.Local;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,12 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.validation.constraints.AssertTrue;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import static org.junit.Assert.assertTrue;
 
@@ -46,7 +41,7 @@ public class EventServiceTest {
                 .displayName("Nooheat")
                 .twitchId("nooheat1228")
                 .email("nooheat1228@gmail.com")
-                .build()).getUid();
+                .build()).getUserId();
     }
 
     @After

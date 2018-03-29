@@ -3,6 +3,8 @@ package com.nooheat.seonarangevent.domain.partIn;
 import com.nooheat.seonarangevent.domain.event.Event;
 import com.nooheat.seonarangevent.domain.event.EventRepository;
 import com.nooheat.seonarangevent.domain.event.EventType;
+import com.nooheat.seonarangevent.domain.partIn.kda.KdaEventPartIn;
+import com.nooheat.seonarangevent.domain.partIn.kda.KdaEventPartInRepository;
 import com.nooheat.seonarangevent.domain.user.User;
 import com.nooheat.seonarangevent.domain.user.UserRepository;
 import org.junit.After;
@@ -14,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
-import javax.validation.constraints.AssertTrue;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -22,7 +23,7 @@ import static junit.framework.TestCase.assertTrue;
 @SpringBootTest
 public class partInRepositoryTest {
     @Autowired
-    private UserEventPartInRepository userEventPartInRepository;
+    private KdaEventPartInRepository kdaEventPartInRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -37,7 +38,7 @@ public class partInRepositoryTest {
                 .email("yunth1228@naver.com")
                 .twitchId("yunth1228").build());
 
-        Event event = eventRepository.save(Event.builder().uid(user.getUid()).allowDuplication(false).content("asd").title("asdasd").type(EventType.KDA).build());
+        Event event = eventRepository.save(Event.builder().uid(user.getUserId()).allowDuplication(false).content("asd").title("asdasd").type(EventType.KDA).build());
 
     }
 
@@ -46,12 +47,12 @@ public class partInRepositoryTest {
     public void saveEventPartIn() {
         User user = userRepository.findByEmail("yunth1228@naver.com");
 
-        System.out.println(user.getUid());
+        System.out.println(user.getUserId());
         Event event = eventRepository.findAll().get(0);
 
-        System.out.println(event.getId());
+        System.out.println(event.getEventId());
         // TODO: 아래로 뺴기.
-        UserEventPartIn partIn = userEventPartInRepository.save(UserEventPartIn.builder().event(event).user(user).build());
+        KdaEventPartIn partIn = kdaEventPartInRepository.save(KdaEventPartIn.builder().event(event).user(user).build());
         assertTrue(event != null);
         assertTrue(user != null);
         assertTrue(partIn != null);
@@ -62,6 +63,6 @@ public class partInRepositoryTest {
         System.out.println("CLEAN");
         userRepository.deleteAll();
         eventRepository.deleteAll();
-        userEventPartInRepository.deleteAll();
+        kdaEventPartInRepository.deleteAll();
     }
 }

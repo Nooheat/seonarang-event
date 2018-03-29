@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.validation.constraints.AssertTrue;
-
 import static junit.framework.TestCase.assertTrue;
 
 @RunWith(SpringRunner.class)
@@ -30,7 +28,7 @@ public class UserRepositoryTest {
                 .displayName("Nooheat")
                 .twitchId("nooheat1228")
                 .email("nooheat1228@gmail.com")
-                .build()).getUid();
+                .build()).getUserId();
 
         assertTrue(uid != null);
     }

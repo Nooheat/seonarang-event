@@ -1,24 +1,18 @@
 package com.nooheat.seonarangevent.web;
 
-import com.google.gson.JsonObject;
 import com.nooheat.seonarangevent.domain.event.Event;
-import com.nooheat.seonarangevent.domain.user.User;
 import com.nooheat.seonarangevent.domain.user.UserRepository;
 import com.nooheat.seonarangevent.dto.event.EventSaveRequestDto;
 import com.nooheat.seonarangevent.service.EventService;
 import com.nooheat.seonarangevent.support.JwtManager;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.Jwts;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.stream.Stream;
 
 @RestController
 @AllArgsConstructor
@@ -33,8 +27,8 @@ public class EventController {
     public Long saveEvent(@CookieValue(value = "twitch-event-access-token", defaultValue = "null") String accessToken, @RequestBody EventSaveRequestDto dto) throws Exception {
 
         Jws<Claims> claims = JwtManager.parse(accessToken);
-        String uid = claims.getBody().get("uid", String.class);
-        dto.setUid(uid);
+        String uid = claims.getBody().get("userId", String.class);
+        dto.setUserId(uid);
 
         return eventService.save(dto);
     }

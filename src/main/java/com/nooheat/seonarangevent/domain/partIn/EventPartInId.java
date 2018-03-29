@@ -5,11 +5,11 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 @NoArgsConstructor
-public class UserEventPartInId implements Serializable {
+public class EventPartInId implements Serializable {
     private String user;
     private Long event;
 
-    public UserEventPartInId(String user, Long event) {
+    public EventPartInId(String user, Long event) {
         this.user = user;
         this.event = event;
     }

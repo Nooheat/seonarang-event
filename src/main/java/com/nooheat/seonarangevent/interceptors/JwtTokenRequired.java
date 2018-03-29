@@ -33,7 +33,7 @@ public class JwtTokenRequired extends HandlerInterceptorAdapter {
 
         String tokenStr = token.getValue();
 
-        String uid = JwtManager.parse(tokenStr).getBody().get("uid", String.class);
+        String uid = JwtManager.parse(tokenStr).getBody().get("userId", String.class);
 
         User user = userService.findByUid(uid);
         if (user == null) {

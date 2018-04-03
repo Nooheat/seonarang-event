@@ -1,7 +1,6 @@
 package com.nooheat.seonarangevent.interceptors;
 
 import com.nooheat.seonarangevent.domain.user.User;
-import com.nooheat.seonarangevent.domain.user.UserRepository;
 import com.nooheat.seonarangevent.exception.JwtTokenClaimNotFoundException;
 import com.nooheat.seonarangevent.exception.JwtTokenStringNotFoundException;
 import com.nooheat.seonarangevent.exception.UidNotValidException;
@@ -35,7 +34,7 @@ public class JwtTokenRequired extends HandlerInterceptorAdapter {
 
         String uid = JwtManager.parse(tokenStr).getBody().get("userId", String.class);
 
-        User user = userService.findByUid(uid);
+        User user = userService.findByUserId(uid);
         if (user == null) {
             throw new UidNotValidException();
         }

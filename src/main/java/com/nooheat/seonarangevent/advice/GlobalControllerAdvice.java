@@ -1,6 +1,7 @@
 package com.nooheat.seonarangevent.advice;
 
 import com.google.gson.JsonObject;
+import com.nooheat.seonarangevent.exception.EventNotFoundException;
 import com.nooheat.seonarangevent.exception.JwtTokenClaimNotFoundException;
 import com.nooheat.seonarangevent.exception.JwtTokenStringNotFoundException;
 import com.nooheat.seonarangevent.exception.UidNotValidException;
@@ -35,6 +36,12 @@ public class GlobalControllerAdvice {
         return new ErrorResponse(exception.getMessage(), request.getRequestURL().toString());
     }
 
+    @ExceptionHandler(EventNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    protected ErrorResponse eventNotFoundException(HttpServletRequest request, Exception exception) {
+        return new ErrorResponse(exception.getMessage(), request.getRequestURL().toString());
+    }
 //    UnexpectedSortException은 발생할 일이 없어 주석처리.
 //    @ExceptionHandler(UnexpectedSortException.class)
 //    @ResponseStatus(HttpStatus.BAD_REQUEST)

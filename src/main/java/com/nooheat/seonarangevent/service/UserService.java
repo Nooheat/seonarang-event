@@ -72,7 +72,7 @@ public class UserService {
         return new UserInfo(infoStr);
     }
 
-    public User findByUid(String uid) {
+    public User findByUserId(String uid) {
         return userRepository.findByUid(uid);
     }
 

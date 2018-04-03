@@ -1,7 +1,6 @@
 package com.nooheat.seonarangevent.web;
 
 import com.nooheat.seonarangevent.domain.event.Event;
-import com.nooheat.seonarangevent.domain.user.UserRepository;
 import com.nooheat.seonarangevent.dto.event.EventSaveRequestDto;
 import com.nooheat.seonarangevent.service.EventService;
 import com.nooheat.seonarangevent.support.JwtManager;
@@ -20,19 +19,15 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
-    @Autowired
-    private UserRepository userRepository;
-
     @PostMapping("/event")
-    public Long saveEvent(@CookieValue(value = "twitch-event-access-token", defaultValue = "null") String accessToken, @RequestBody EventSaveRequestDto dto) throws Exception {
+    public Long saveEvent(@CookieValue(value = "twitch-event-access-token", defaultValue = "null") String accessTokenStr, @RequestBody EventSaveRequestDto dto) {
 
-        Jws<Claims> claims = JwtManager.parse(accessToken);
+        Jws<Claims> claims = JwtManager.parse(accessTokenStr);
         String uid = claims.getBody().get("userId", String.class);
         dto.setUserId(uid);
 
         return eventService.save(dto);
     }
-
 
     @GetMapping("/events/all")
     public Collection<Event> getEvents(Pageable pageable) {

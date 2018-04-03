@@ -17,6 +17,11 @@ public class EventService {
     private EventRepository eventRepository;
 
     @Transactional
+    public Event findByEventId(Long eventId) {
+        return eventRepository.findOne(eventId);
+    }
+
+    @Transactional
     public Long save(EventSaveRequestDto eventSaveRequestDto) {
         return eventRepository.save(eventSaveRequestDto.toEntity()).getEventId();
     }
